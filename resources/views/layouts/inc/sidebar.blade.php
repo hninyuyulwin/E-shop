@@ -19,17 +19,17 @@
       <li class="nav-item">
         <a class="nav-link text-white  {{Request::segment(1) == 'categories' ?  'active bg-gradient-primary': ''}}" href="{{route('categories')}}">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">category</i>
           </div>
           <span class="nav-link-text ms-1">Categories</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white " href="../pages/billing.html">
+        <a class="nav-link text-white {{ Request::segment(1) == 'products' ? 'active bg-gradient-primary' : '' }} " href="{{ route('products') }}">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">receipt_long</i>
+            <i class="material-icons opacity-10">inventory</i>
           </div>
-          <span class="nav-link-text ms-1">Billing</span>
+          <span class="nav-link-text ms-1">Products</span>
         </a>
       </li>
     </ul>

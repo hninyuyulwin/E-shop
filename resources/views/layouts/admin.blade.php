@@ -27,6 +27,9 @@
     
     <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
     <link href="{{ asset('admin/css/material-dashboard.css') }}" rel="stylesheet">
+    {{--toastr--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @yield('styles')
 </head>
 <body class="g-sidenav-show  bg-gray-200">
@@ -60,9 +63,18 @@
 
   {{-- Sweet Alert --}}
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  {{-- Toastr --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   @if (session('status'))
     <script>
       swal("{{ session('status') }}")
+    </script>
+  @endif
+
+  @if (session('message'))
+    <script>
+      toastr.success("{!! session('message') !!}")
     </script>
   @endif
 

@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\FrontendController;
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +34,11 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('categories/edit/{categories:slug}', [CategoryController::class, 'editCart'])->name('editCart');
     Route::put('categories/{categories:slug}', [CategoryController::class, 'updateCart'])->name('updateCart');
     Route::get('categories/{categories:slug}', [CategoryController::class, 'deleteCart'])->name('deleteCart');
+
+    Route::get('products', [ProductController::class, 'index'])->name('products');
+    Route::get('products/addProduct', [ProductController::class, 'addProduct'])->name('addProduct');
+    Route::post('products/storeProduct', [ProductController::class, 'storeProduct'])->name('storeProduct');
+    Route::get('products/editProduct/{products:slug}', [ProductController::class, 'editProduct'])->name('editProduct');
+    Route::put('products/{products:slug}', [ProductController::class, 'updateProduct'])->name('updateProduct');
+    Route::get('products/{products:slug}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 });
