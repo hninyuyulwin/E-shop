@@ -25,7 +25,9 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     
+    <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
     <link href="{{ asset('admin/css/material-dashboard.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 <body class="g-sidenav-show  bg-gray-200">
 
@@ -55,6 +57,14 @@
   <script src="{{ asset('admin/js/smooth-scrollbar.min.js') }}" ></script>
 
   <script src="{{asset('admin/js/material-dashboard.min.js')}}"></script>
+
+  {{-- Sweet Alert --}}
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  @if (session('status'))
+    <script>
+      swal("{{ session('status') }}")
+    </script>
+  @endif
 
   @yield('scripts')
 
