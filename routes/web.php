@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FrontendController;
+use App\Http\Controllers\Frontend\FrontController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,14 @@ use App\Http\Controllers\Admin\FrontendController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', [FrontController::class, 'index'])->name('index');
+
+Route::get('category', [FrontController::class, 'category'])->name('category');
+Route::get('fetch_by_cat/{category:slug}', [FrontController::class, 'fetch_by_cat'])->name('fetch_product_byCat');
 
 Auth::routes();
 
