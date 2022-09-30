@@ -35,7 +35,7 @@
 <body class="g-sidenav-show  bg-gray-200">
 
     @include('layouts.inc.frontnavbar')
-    <div class="row">
+    <div class="container">
         @yield('content')
     </div>
 
@@ -44,6 +44,7 @@
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/custom.js') }}"></script>
     {{-- Sweet Alert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
