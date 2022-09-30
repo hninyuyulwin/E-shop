@@ -6,16 +6,19 @@
     <div class="py-3 mt-5 mb-4 shadow-sm border-top">
         <div class="container">
             <h6 class="mb-0">
-                Collections / {{ $products->category->name }} / {{ $products->name }}
-                <a href="{{ route('fetch_product_byCat', $products->category->slug) }}" class="text-primary float-end"
-                    style="text-decoration: none;">Back</a>
+                Collections /
+                <a href="{{ route('fetch_product_byCat', $products->category->slug) }}"
+                    style="text-decoration: none;color: inherit;">
+                    {{ $products->category->name }}
+                </a>
+                / {{ $products->name }}
             </h6>
         </div>
     </div>
 
     <div class="container">
 
-        <div class="card shadow">
+        <div class="card shadow product_data">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4 border-right">
@@ -44,6 +47,7 @@
                             <label class="badge bg-success">In Stock</label>
                             <div class="row mt-2">
                                 <div class="col-md-2">
+                                    <input type="hidden" value="{{ $products->id }}" class="prod_id">
                                     <label>Quantity</label>
                                     <div class="input-group text-center mb-3">
                                         <button class="input-group-text decrement-btn">-</button>
@@ -58,7 +62,7 @@
                                     <i class="fa fa-heart mr-2"></i>
                                     Add to wish list
                                 </button>
-                                <button type="button" class="btn btn-primary me-3 float-start">
+                                <button type="button" class="addToCartBtn btn btn-primary me-3 float-start">
                                     <i class="fa fa-shopping-cart mr-2"></i>
                                     Add to cart
                                 </button>
@@ -77,6 +81,33 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+
+            //AddToCart
+            $(".addToCartBtn").click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.prod_id').val();
+                var product_qty = $(this).closest('.product_data').find('.qty-input').val();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('addToCart') }}",
+                    data: {
+                        'product_id': product_id,
+                        'product_qty': product_qty
+                    },
+                    success: function(response) {
+                        swal(response.status);
+                    }
+                })
+            })
+
+            //increment Button
             $(".increment-btn").click(function(e) {
                 e.preventDefault();
 
@@ -90,6 +121,7 @@
                 }
             });
 
+            //Decrement Button
             $(".decrement-btn").click(function(e) {
                 e.preventDefault();
                 var quantity = "{{ $products->qty }}";
@@ -101,6 +133,7 @@
                     $(".qty-input").val(value);
                 }
             });
+
         });
     </script>
 @endsection

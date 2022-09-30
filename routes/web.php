@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FrontendController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FrontController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,10 @@ Route::get('category/{category:slug}/{product:slug}', [FrontController::class, '
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+});
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [FrontendController::class, 'index'])->name('dashboard');
