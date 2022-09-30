@@ -25,7 +25,10 @@ use App\Http\Controllers\Frontend\FrontController;
 Route::get('/', [FrontController::class, 'index'])->name('index');
 
 Route::get('category', [FrontController::class, 'category'])->name('category');
-Route::get('fetch_by_cat/{category:slug}', [FrontController::class, 'fetch_by_cat'])->name('fetch_product_byCat');
+Route::get('category/{category:slug}', [FrontController::class, 'fetch_by_cat'])->name('fetch_product_byCat');
+Route::get('category/{category:slug}/{product:slug}', [FrontController::class, 'product_detail'])->name('product_detail');
+
+
 
 Auth::routes();
 

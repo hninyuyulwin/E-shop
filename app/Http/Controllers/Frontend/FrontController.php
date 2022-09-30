@@ -25,8 +25,21 @@ class FrontController extends Controller
 
     public function fetch_by_cat(Category $category)
     {
-        $products = Product::where('cate_id', $category->id)->where('status', '0')->get();
-        //$products = Product::where('cate_id', $category->id)->get();
+        //$products = Product::where('cate_id', $category->id)->where('status', '0')->get();
+        $products = Product::where('cate_id', $category->id)->get();
         return view('frontend.products.product', compact('category', 'products'));
+    }
+
+    public function product_detail(Category $category, $pro_slug)
+    {
+        if ($category) {
+            $pro_slug = Product::where('slug', $pro_slug);
+            if ($pro_slug->exists()) {
+                $products = $pro_slug->first();
+                return view('frontend.products.product-details', compact('products'));
+            } else {
+                return redirect()->route('category')->with('status', 'No Realted Product Available');
+            }
+        }
     }
 }
