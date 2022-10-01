@@ -50,4 +50,22 @@ class CartController extends Controller
             return response()->json(['status' => 'Login Required!']);
         }
     }
+
+    public function updateQtyCalc(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product_qty = $request->product_qty;
+
+        if (Auth::check()) {
+            $cart = Cart::where('prod_id', $product_id)->where('user_id', Auth::user()->id);
+            if ($cart->exists()) {
+                $cart = $cart->first();
+                $cart->prod_qty = $product_qty;
+                $cart->update();
+                return response()->json(['status' => 'Product Quantity Updated!']);
+            }
+        } else {
+            return response()->json(['status' => 'Login Required!']);
+        }
+    }
 }
