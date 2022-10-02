@@ -58,18 +58,21 @@
                                 </div>
                             </div>
                             <div class="col-md-10">
-                                <button type="button" class="btn btn-success me-3 float-start">
-                                    <i class="fa fa-heart mr-2"></i>
-                                    Add to wish list
-                                </button>
                                 <button type="button" class="addToCartBtn btn btn-primary me-3 float-start">
                                     <i class="fa fa-shopping-cart mr-2"></i>
                                     Add to cart
                                 </button>
                             </div>
                         @else
-                            <label class="badge badge-danger">Out of stock</label>
+                            <div class="badge bg-danger mb-4">Out of stock</div>
                         @endif
+
+                        <div class="col-md-10">
+                            <button type="button" class="btn btn-success me-3 float-start">
+                                <i class="fa fa-heart mr-2"></i>
+                                Add to wish list
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

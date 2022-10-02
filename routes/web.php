@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FrontendController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
 use GuzzleHttp\Middleware;
 
@@ -43,6 +44,8 @@ Route::put('updateQtyCalc', [CartController::class, 'updateQtyCalc'])->name('upd
 
 Route::middleware(['auth'])->group(function () {
     Route::get('cart', [CartController::class, 'viewCart'])->name('cart');
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place-order');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
