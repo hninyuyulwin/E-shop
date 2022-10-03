@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FrontendController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
@@ -68,4 +69,11 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('products/editProduct/{products:slug}', [ProductController::class, 'editProduct'])->name('editProduct');
     Route::put('products/{products:slug}', [ProductController::class, 'updateProduct'])->name('updateProduct');
     Route::get('products/{products:slug}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+
+    Route::get('users', [FrontendController::class, 'users'])->name('users');
+    Route::get('orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('orders/view-order/{id}', [OrderController::class, 'viewOrder'])->name('view-order');
+    Route::put('orders/update-order/{id}', [OrderController::class, 'updateOrderStatus'])->name('update-order-status');
+
+    Route::get('orders/order-histroy', [OrderController::class, 'orderHistroy'])->name('order-histroy');
 });
