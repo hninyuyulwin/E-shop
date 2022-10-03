@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\FrontendController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
+use App\Http\Controllers\Frontend\UserController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -46,6 +47,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('cart', [CartController::class, 'viewCart'])->name('cart');
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place-order');
+
+    Route::get('my-orders', [UserController::class, 'index'])->name('my-orders');
+    Route::get('view-order/{id}', [UserController::class, 'viewOrder'])->name('view-order');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

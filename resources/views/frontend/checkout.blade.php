@@ -84,39 +84,46 @@
                     <div class="card-header">
                         <h5>Order Details</h5>
                     </div>
-                    <div class="card-body">
-                        @php
-                            $total = 0;
-                        @endphp
-                        @foreach ($cartItems as $item)
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img src="{{ asset('assets/uploads/product/' . $item->products->image) }}"
-                                        width="100">
-                                </div>
-                                <div class="col-md-3">
-                                    <h6>{{ $item->products->name }}</h6>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Qty : {{ $item->prod_qty }}</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>{{ number_format($item->products->selling_price * $item->prod_qty) }} MMK</p>
-                                </div>
-                            </div>
-                            <hr>
+                    @if ($cartItems->count() > 0)
+                        <div class="card-body">
                             @php
-                                $total += $item->products->selling_price * $item->prod_qty;
+                                $total = 0;
                             @endphp
-                        @endforeach
-                    </div>
-                    <div class="card-footer">
-                        <h6 class="text-primary">Total Price : <span class="float-end">{{ number_format($total) }}
-                                MMK</span>
-                        </h6>
-                    </div>
+                            @foreach ($cartItems as $item)
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="{{ asset('assets/uploads/product/' . $item->products->image) }}"
+                                            width="100">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>{{ $item->products->name }}</h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Qty : {{ $item->prod_qty }}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{ number_format($item->products->selling_price * $item->prod_qty) }} MMK</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                @php
+                                    $total += $item->products->selling_price * $item->prod_qty;
+                                @endphp
+                            @endforeach
+                        </div>
+                        <div class="card-footer">
+                            <h6 class="text-primary">Total Price : <span class="float-end">{{ number_format($total) }}
+                                    MMK</span>
+                            </h6>
+                            <button type="submit" class="btn btn-success float-end mt-3">Place Order</button>
+                        </div>
+                    @else
+                        <div class="card-body text-center">
+                            <h3>No products in cart <i class="fa fa-shopping-cart"></i></h3>
+                        </div>
+                    @endif
+
                 </div>
-                <button type="submit" class="btn btn-success float-end mt-3">Place Order</button>
             </div>
         </div>
     </form>

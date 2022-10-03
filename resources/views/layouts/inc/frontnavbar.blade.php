@@ -41,6 +41,9 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
+                                <a class="dropdown-item" href="{{ route('my-orders') }}">My Orders</a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="#">My Profile</a>
                             </li>
                             <li>

@@ -31,6 +31,13 @@ class CheckoutController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         $data['tracking_no'] = 'kiwi' . rand(1111, 9999);
+        //to calculate the total price
+        $total = 0;
+        $total_cartItem = Cart::where('user_id', Auth::id())->get();
+        foreach ($total_cartItem as $prod) {
+            $total += $prod->products->selling_price * $prod->prod_qty;
+        }
+        $data['total_price'] = $total;
         $order = Order::create($data);
 
         $cartItems = Cart::where('user_id', Auth::id())->get();
