@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FrontendController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\CartController;
@@ -70,10 +71,12 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('products/{products:slug}', [ProductController::class, 'updateProduct'])->name('updateProduct');
     Route::get('products/{products:slug}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 
-    Route::get('users', [FrontendController::class, 'users'])->name('users');
+    //Order Part
     Route::get('orders', [OrderController::class, 'index'])->name('orders');
     Route::get('orders/view-order/{id}', [OrderController::class, 'viewOrder'])->name('view-order');
     Route::put('orders/update-order/{id}', [OrderController::class, 'updateOrderStatus'])->name('update-order-status');
-
     Route::get('orders/order-histroy', [OrderController::class, 'orderHistroy'])->name('order-histroy');
+
+    Route::get('users', [DashboardController::class, 'users'])->name('users');
+    Route::get('users/view-user/{id}', [DashboardController::class, 'viewUser'])->name('view-user');
 });
