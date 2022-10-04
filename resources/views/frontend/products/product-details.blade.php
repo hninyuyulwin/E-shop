@@ -68,7 +68,7 @@
                         @endif
 
                         <div class="col-md-10">
-                            <button type="button" class="btn btn-success me-3 float-start">
+                            <button type="button" class="btn btn-success me-3 float-start addToWishlist">
                                 <i class="fa fa-heart mr-2"></i>
                                 Add to wish list
                             </button>
@@ -84,7 +84,11 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             //AddToCart
             $(".addToCartBtn").click(function(e) {
                 e.preventDefault();
@@ -92,11 +96,7 @@
                 var product_id = $(this).closest('.product_data').find('.prod_id').val();
                 var product_qty = $(this).closest('.product_data').find('.qty-input').val();
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+
                 $.ajax({
                     method: 'POST',
                     url: "{{ route('addToCart') }}",
@@ -109,6 +109,24 @@
                     }
                 })
             })
+
+            //AddToWishlist
+            $(".addToWishlist").click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.prod_id').val();
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('addToWishlist') }}",
+                    data: {
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        swal(response.status);
+                    }
+                });
+            });
 
             //increment Button
             $(".increment-btn").click(function(e) {

@@ -65,6 +65,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cart') }}"><i class="fa fa-shopping-cart text-white"></i></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('wishlist') }}"><i
+                            class="fa fa-heart text-white me-2"></i>Wishlist</a>
+                </li>
             </ul>
         </div>
     </div>

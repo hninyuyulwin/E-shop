@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\WishlistController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -45,6 +46,10 @@ Route::post('addToCart', [CartController::class, 'addToCart'])->name('addToCart'
 Route::delete('delete-cart-item', [CartController::class, 'deleteProduct'])->name('delete-cart-item');
 Route::put('updateQtyCalc', [CartController::class, 'updateQtyCalc'])->name('updateQtyCalc');
 
+//Wishlist add & delete
+Route::post('addToWishlist', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
+Route::delete('wishlistDelete', [WishlistController::class, 'wishlistDelete'])->name('wishlistDelete');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('cart', [CartController::class, 'viewCart'])->name('cart');
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
@@ -52,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('my-orders', [UserController::class, 'index'])->name('my-orders');
     Route::get('view-order/{id}', [UserController::class, 'viewOrder'])->name('view-order');
+
+    //Wishlist Part
+    Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
