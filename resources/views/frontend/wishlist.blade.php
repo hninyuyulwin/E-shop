@@ -88,6 +88,7 @@
                     },
                     success: function(response) {
                         swal(response.status);
+                        loadWishlist();
                     }
                 });
             });

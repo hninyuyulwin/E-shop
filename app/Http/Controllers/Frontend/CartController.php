@@ -68,4 +68,10 @@ class CartController extends Controller
             return response()->json(['status' => 'Login Required!']);
         }
     }
+
+    public function cartCount()
+    {
+        $cartCount = Cart::where('user_id', Auth::id())->count();
+        return response()->json(['count' => $cartCount]);
+    }
 }

@@ -106,6 +106,7 @@
                     },
                     success: function(response) {
                         swal(response.status);
+                        loadCount();
                     }
                 })
             })
@@ -124,6 +125,7 @@
                     },
                     success: function(response) {
                         swal(response.status);
+                        loadWishlist();
                     }
                 });
             });

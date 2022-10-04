@@ -50,6 +50,10 @@ Route::put('updateQtyCalc', [CartController::class, 'updateQtyCalc'])->name('upd
 Route::post('addToWishlist', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
 Route::delete('wishlistDelete', [WishlistController::class, 'wishlistDelete'])->name('wishlistDelete');
 
+//Cart & Wishlist Count
+Route::get('cart-count', [CartController::class, 'cartCount']);
+Route::get('wishlist-count', [WishlistController::class, 'wishlistCount']);
+
 Route::middleware(['auth'])->group(function () {
     Route::get('cart', [CartController::class, 'viewCart'])->name('cart');
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');

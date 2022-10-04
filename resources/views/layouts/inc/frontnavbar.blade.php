@@ -63,11 +63,16 @@
                     </li>
                 @endguest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('cart') }}"><i class="fa fa-shopping-cart text-white"></i></a>
+                    <a class="nav-link" href="{{ route('cart') }}">
+                        <i class="fa fa-shopping-cart text-white"></i>
+                        <span class="badge badge-pill bg-danger cart-count">0</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('wishlist') }}"><i
-                            class="fa fa-heart text-white me-2"></i>Wishlist</a>
+                    <a class="nav-link" href="{{ route('wishlist') }}">
+                        <i class="fa fa-heart text-white me-2"></i>Wishlist
+                        <span class="badge badge-pill bg-warning wishlist-count">0</span>
+                    </a>
                 </li>
             </ul>
         </div>
