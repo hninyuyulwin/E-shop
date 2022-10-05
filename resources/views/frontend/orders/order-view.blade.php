@@ -1,4 +1,3 @@
-
 @extends('layouts.frontend')
 
 @section('title', 'My Orders')
@@ -64,7 +63,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <h6>Grand Total : <span class="float-end">{{ number_format($orders->total_price) }} MMK</span>
+                            <h5>Grand Total : <span class="float-end">{{ number_format($orders->total_price) }} MMK</span>
+                            </h5>
+                            <h6 class="border-top pt-3">Payment Mode : <span
+                                    class="badge badge-pill bg-success">{{ $orders->payment_mode }}</span>
                             </h6>
                         </div>
                     </div>

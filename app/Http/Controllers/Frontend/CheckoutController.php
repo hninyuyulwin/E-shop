@@ -31,6 +31,10 @@ class CheckoutController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         $data['tracking_no'] = 'kiwi' . rand(1111, 9999);
+
+        $data['payment_mode'] = $request->payment_mode;
+        $data['payment_id'] = $request->payment_id;
+
         //to calculate the total price
         $total = 0;
         $total_cartItem = Cart::where('user_id', Auth::id())->get();
@@ -70,6 +74,32 @@ class CheckoutController extends Controller
         $cartItems = Cart::where('user_id', Auth::id())->get();
         Cart::destroy($cartItems);
 
+        if ($request->payment_mode == "Paid by Razor Pay" || $request->payment_mode == "Paid By Paypal") {
+            return response()->json(['status' => "Order Placed Success"]);
+        }
         return redirect()->route('index')->with('status', 'Order Placed Submited');
+    }
+
+    public function razorPayCheck(Request $request)
+    {
+        $cartItems = Cart::where('user_id', Auth::id())->get();
+        $total_price = 0;
+        foreach ($cartItems as $item) {
+            $total_price += $item->products->selling_price * $item->prod_qty;
+        }
+        $data = $request->all();
+        return response()->json([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'address1' => $data['address1'],
+            'address2' => $data['address2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'country' => $data['country'],
+            'pincode' => $data['pincode'],
+            'total_price' => $total_price,
+        ]);
     }
 }

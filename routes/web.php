@@ -60,10 +60,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place-order');
 
     Route::get('my-orders', [UserController::class, 'index'])->name('my-orders');
-    Route::get('view-order/{id}', [UserController::class, 'viewOrder'])->name('view-order');
+    Route::get('view-order/{id}', [UserController::class, 'viewOrder'])->name('Userview-order');
 
     //Wishlist Part
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist');
+
+    //Payment gateways
+    Route::post('proceed-to-pay',[CheckoutController::class,'razorPayCheck']);
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

@@ -1,4 +1,3 @@
-
 @extends('layouts.frontend')
 
 @section('title', 'My Orders')
@@ -35,7 +34,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('view-order', $item->id) }}" class="btn btn-primary">View</a>
+                                        <a href="{{ route('Userview-order', $item->id) }}" class="btn btn-primary">View</a>
                                     </td>
                                 </tr>
                             @endforeach
