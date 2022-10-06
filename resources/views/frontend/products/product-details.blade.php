@@ -1,8 +1,97 @@
 @extends('layouts.frontend')
 
 @section('title', 'KIWI | Product_Details')
+@section('styles')
+    <style>
+        /* rating */
+        .rating-css div {
+            padding: 20px 0;
+            color: #ffe400;
+            font-family: sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+        }
 
+        .rating-css input {
+            display: none;
+        }
+
+        .rating-css input+label {
+            font-size: 60px;
+            cursor: pointer;
+            text-shadow: 1px 1px 0 #8f8420;
+        }
+
+        .rating-css input:checked+label~label {
+            color: #b4afaf;
+        }
+
+        .rating-css label:active {
+            transform: scale(0.8);
+            transition: 0.3s ease;
+        }
+
+        .checked {
+            color: #ffe400;
+        }
+
+        /* End of Star Rating */
+    </style>
+@endsection
 @section('content')
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('add-rating') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="prod_id" value="{{ $products->id }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Rate {{ $products->name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="rating-css">
+                            <div class="star-icon">
+                                @if ($user_rating)
+                                    @for ($i = 1; $i <= $user_rating->stars_rated; $i++)
+                                        <input type="radio" value="{{ $i }}" name="product_rating" checked
+                                            id="rating{{ $i }}">
+                                        <label for="rating{{ $i }}" class="fa fa-star"></label>
+                                    @endfor
+                                    @for ($j = $user_rating->stars_rated + 1; $j <= 5; $j++)
+                                        <input type="radio" value="{{ $j }}" name="product_rating"
+                                            id="rating{{ $j }}">
+                                        <label for="rating{{ $j }}" class="fa fa-star"></label>
+                                    @endfor
+                                @else
+                                    <input type="radio" value="1" name="product_rating" checked id="rating1">
+                                    <label for="rating1" class="fa fa-star"></label>
+                                    <input type="radio" value="2" name="product_rating" id="rating2">
+                                    <label for="rating2" class="fa fa-star"></label>
+                                    <input type="radio" value="3" name="product_rating" id="rating3">
+                                    <label for="rating3" class="fa fa-star"></label>
+                                    <input type="radio" value="4" name="product_rating" id="rating4">
+                                    <label for="rating4" class="fa fa-star"></label>
+                                    <input type="radio" value="5" name="product_rating" id="rating5">
+                                    <label for="rating5" class="fa fa-star"></label>
+                                @endif
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="py-3 mt-5 mb-4 shadow-sm border-top">
         <div class="container">
             <h6 class="mb-0">
@@ -18,8 +107,8 @@
 
     <div class="container">
 
-        <div class="card shadow product_data">
-            <div class="card-body">
+        <div class="card my-5 shadow product_data">
+            <div class="card-body mt-3">
                 <div class="row">
                     <div class="col-md-4 border-right">
                         <img src="{{ asset('assets/uploads/product/' . $products->image) }}" alt="Product-Image"
@@ -37,10 +126,30 @@
                         <label class="me-3 mb-3">Original Price :
                             <s class="text-danger">{{ number_format($products->original_price) }} MMK</s>
                         </label><br>
-                        <label class="fw-bold">Selling Price : {{ number_format($products->selling_price) }} MMK</label>
+                        <label class="fw-bold mb-2">Selling Price : {{ number_format($products->selling_price) }}
+                            MMK</label>
+                        @php
+                            $rateNumber = number_format($rating_value);
+                        @endphp
+                        <div class="rating border-top border-bottom p-2">
+                            @for ($i = 1; $i <= $rateNumber; $i++)
+                                <i class="fa fa-star checked"></i>
+                            @endfor
+                            @for ($j = $rateNumber + 1; $j <= 5; $j++)
+                                <i class="fa fa-star"></i>
+                            @endfor
+                            <span>
+                                @if ($ratings->count() > 0)
+                                    {{ number_format($rating_value) }} ratings
+                                @else
+                                    No rating
+                                @endif
+                            </span>
+                        </div>
+
                         <p class="text-primary mt-3">Stock Quantity : {{ $products->qty }}</p>
                         <p class="mt-3">
-                            {{ $products->description }}
+                            {{ $products->small_description }}
                         </p>
                         <hr>
                         @if ($products->qty > 0)
@@ -51,8 +160,8 @@
                                     <label>Quantity</label>
                                     <div class="input-group text-center mb-3">
                                         <button class="input-group-text decrement-btn">-</button>
-                                        <input type="text" class="form-control text-center qty-input" readonly="readonly"
-                                            name="quantity" value="1">
+                                        <input type="text" class="form-control text-center qty-input"
+                                            readonly="readonly" name="quantity" value="1">
                                         <button class="input-group-text increment-btn">+</button>
                                     </div>
                                 </div>
@@ -74,6 +183,14 @@
                             </button>
                         </div>
                     </div>
+                </div>
+                <hr>
+                <div class="col-md-8 offset-md-2 mb-3">
+                    <h5>Description</h5>
+                    <p class="mt-3">{{ $products->description }}</p>
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Rating this product
+                    </button>
                 </div>
             </div>
         </div>

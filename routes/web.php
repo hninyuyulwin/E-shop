@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
+use App\Http\Controllers\Frontend\RatingController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\WishlistController;
 use GuzzleHttp\Middleware;
@@ -66,7 +67,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist');
 
     //Payment gateways
-    Route::post('proceed-to-pay',[CheckoutController::class,'razorPayCheck']);
+    Route::post('proceed-to-pay', [CheckoutController::class, 'razorPayCheck']);
+
+    //Product Rating
+    Route::post('add-rating', [RatingController::class, 'add'])->name('add-rating');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
