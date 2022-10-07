@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontController;
 use App\Http\Controllers\Frontend\RatingController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\WishlistController;
 use GuzzleHttp\Middleware;
@@ -71,6 +72,12 @@ Route::middleware(['auth'])->group(function () {
 
     //Product Rating
     Route::post('add-rating', [RatingController::class, 'add'])->name('add-rating');
+
+    //Review Giving
+    Route::get('add-review/{slug}', [ReviewController::class, 'index'])->name('add-review');
+    Route::post('post-review', [ReviewController::class, 'postReview'])->name('post-review');
+    Route::get('edit-review/{slug}', [ReviewController::class, 'editReview'])->name('edit-review');
+    Route::put('update-review', [ReviewController::class, 'updateReview'])->name('update-review');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

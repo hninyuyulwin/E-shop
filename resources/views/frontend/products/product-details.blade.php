@@ -184,13 +184,54 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="col-md-8 offset-md-2 mb-3">
+                <div class="col-md-10 offset-md-1 mt-4 mb-4">
                     <h5>Description</h5>
                     <p class="mt-3">{{ $products->description }}</p>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Rating this product
-                    </button>
+                </div>
+                <hr>
+                <div class="col-md-12 my-4 py-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-link" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Rating this product
+                            </button>
+                            <a href="{{ route('add-review', $products->slug) }}" class="btn btn-outline-success">Review
+                                Product</a>
+                        </div>
+                        <div class="col-md-8">
+                            @foreach ($reviews as $item)
+                                <div class="review-head mb-3" style="clear: both;">
+                                    <label for="">{{ $item->user->name . ' ' . $item->user->lname }}</label>
+                                    @if ($item->user->id == Auth::id())
+                                        <a href="{{ route('edit-review', $products->slug) }}"
+                                            class="btn btn-sm btn-warning float-end">Edit</a>
+                                    @endif
+                                </div>
+                                <div class="review-body" style="clear: both;">
+                                    @php
+                                        $rating = App\Models\Rating::where('prod_id', $products->id)
+                                            ->where('user_id', $item->user->id)
+                                            ->first();
+                                    @endphp
+                                    @if ($rating)
+                                        @php
+                                            $user_rating = $rating->stars_rated;
+                                        @endphp
+                                        @for ($i = 1; $i <= $user_rating; $i++)
+                                            <i class="fa fa-star checked"></i>
+                                        @endfor
+                                        @for ($j = $user_rating + 1; $j <= 5; $j++)
+                                            <i class="fa fa-star"></i>
+                                        @endfor
+                                    @endif
+                                    <p class="float-end">Review on : <i>{{ $item->updated_at->format('d-M-Y H:i:s') }}</i>
+                                    </p>
+                                    <p>{{ $item->user_review }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

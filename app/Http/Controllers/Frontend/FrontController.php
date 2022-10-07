@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
@@ -42,13 +43,15 @@ class FrontController extends Controller
                 $rating_sum = Rating::where('prod_id', $products->id)->sum('stars_rated');
                 $user_rating = Rating::where('prod_id', $products->id)->where('user_id', Auth::id())->first();
 
+                $reviews = Review::where('prod_id', $products->id)->get();
+
                 if ($ratings->count() > 0) {
                     $rating_value = $rating_sum / $ratings->count(); // find average of rating
                 } else {
                     $rating_value = 0;
                 }
 
-                return view('frontend.products.product-details', compact('products', 'ratings', 'rating_value', 'user_rating'));
+                return view('frontend.products.product-details', compact('products', 'ratings', 'rating_value', 'user_rating', 'reviews'));
             } else {
                 return redirect()->route('category')->with('status', 'No Realted Product Available');
             }
