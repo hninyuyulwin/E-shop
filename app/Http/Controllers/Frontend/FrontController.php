@@ -57,4 +57,31 @@ class FrontController extends Controller
             }
         }
     }
+
+    public function productlistAjax()
+    {
+        //$products = Product::select('name')->where('status', 0)->get();
+        $products = Product::select('name')->get();
+        $data = [];
+        foreach ($products as $item) {
+            $data[] = $item['name'];
+        }
+        //return response()->json(['status' => $data]);
+        return $data;
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $search = $request->search;
+        if ($search != '') {
+            $product = Product::where('name', 'LIKE', "%$search%")->first();
+            if ($product) {
+                return redirect('category/' . $product->category->slug . '/' . $product->slug);
+            } else {
+                return redirect()->back()->with('status', 'No match item in our list');
+            }
+        } else {
+            return redirect()->back();
+        }
+    }
 }

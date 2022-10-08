@@ -37,6 +37,9 @@ Route::get('category', [FrontController::class, 'category'])->name('category');
 Route::get('category/{category:slug}', [FrontController::class, 'fetch_by_cat'])->name('fetch_product_byCat');
 Route::get('category/{category:slug}/{product:slug}', [FrontController::class, 'product_detail'])->name('product_detail');
 
+//productSearch
+Route::get('product_list', [FrontController::class, 'productlistAjax'])->name('product_list');
+Route::get('searchProduct', [FrontController::class, 'searchProduct'])->name('searchProduct');
 
 
 Auth::routes();

@@ -5,6 +5,11 @@
                 alt="">
             KIWI World
         </a>
+        <form action="{{ route('searchProduct') }}" method="GET" class="d-flex">
+            <input id="search_product" name="search" class="form-control me-2 " type="search" placeholder="Search..."
+                aria-label="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
