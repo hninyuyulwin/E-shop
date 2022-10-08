@@ -13,7 +13,7 @@
     </div>
 
     <div class="container my-5">
-        <div class="card shadow">
+        <div class="card shadow wishlistitems">
             <div class="card-header">
                 <h4>My Wishlist</h4>
             </div>
@@ -93,7 +93,8 @@
                 });
             });
 
-            $(".remove-whislist").click(function(e) {
+            //$(".remove-whislist").click(function(e) {
+            $(document).on('click', '.remove-whislist', function(e) {
                 e.preventDefault();
 
                 var product_id = $(this).closest('.product_data').find('.prod_id').val();
@@ -104,7 +105,8 @@
                         'id': product_id,
                     },
                     success: function(response) {
-                        window.location.reload();
+                        //window.location.reload();
+                        $('.wishlistitems').load(location.href + " .wishlistitems");
                         swal(response.status);
                     }
                 })

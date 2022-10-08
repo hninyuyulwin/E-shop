@@ -144,7 +144,7 @@
 @endsection
 @section('scripts')
     <script src="https://www.paypal.com/sdk/js?client-id=AWxELts5XRoe4bUB0jLCkdJvdDI-Y7J_CPijRZjmAeccoG8UFxUPYZs33LzuTc55WBgGWdpXCT542ZDM
-                                                                    "></script>
+                                                                                    "></script>
 
     <script>
         paypal.Buttons({
@@ -199,8 +199,10 @@
                             'payment_id': details.id,
                         },
                         success: function(response) {
-                            swal(response.status);
-                            window.location.href = "{{ route('my-orders') }}";
+                            swal(response.status)
+                                .then((value) => {
+                                    window.location.href = "{{ route('my-orders') }}";
+                                });
                         }
                     });
                 });

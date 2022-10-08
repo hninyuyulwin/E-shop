@@ -17,7 +17,7 @@
     </div>
     <div class="container my-5">
 
-        <div class="card shadow ">
+        <div class="card shadow cartitems">
             @if ($cartItem->count() > 0)
                 <div class="card-body">
                     @php
@@ -97,7 +97,8 @@
     <script>
         $(document).ready(function() {
             //increment Button
-            $(".increment-btn").click(function(e) {
+            //$(".increment-btn").click(function(e) {
+            $(document).on('click', '.increment-btn', function(e) {
                 e.preventDefault();
 
                 var quantity = "{{ $item->products->qty }}";
@@ -112,7 +113,8 @@
             });
 
             //Decrement Button
-            $(".decrement-btn").click(function(e) {
+            //$(".decrement-btn").click(function(e) {
+            $(document).on('click', '.decrement-btn', function(e) {
                 e.preventDefault();
                 var quantity = "{{ $item->products->qty }}";
                 var dec_val = $(this).closest('.product_data').find('.qty-input').val();
@@ -130,7 +132,8 @@
                 }
             });
             //delete
-            $('.delete-cart-item').click(function(e) {
+            //$('.delete-cart-item').click(function(e) {
+            $(document).on('click', '.delete-cart-item', function(e) {
                 e.preventDefault();
 
                 var product_id = $(this).closest('.product_data').find('.prod_id').val();
@@ -142,14 +145,16 @@
                         'product_id': product_id,
                     },
                     success: function(response) {
-                        window.location.reload();
+                        //window.location.reload();
+                        $('.cartitems').load(location.href + " .cartitems");
                         swal("", response.status, "success");
                     }
                 });
             });
 
             //quantityCalculate
-            $(".productQty").click(function(e) {
+            //$(".productQty").click(function(e) {
+            $(document).on('click', '.productQty', function(e) {
                 e.preventDefault();
 
                 var product_id = $(this).closest('.product_data').find('.prod_id').val();
@@ -163,7 +168,8 @@
                         "product_qty": product_qty
                     },
                     success: function(response) {
-                        window.location.reload();
+                        //window.location.reload();
+                        $('.cartitems').load(location.href + " .cartitems");
                     }
                 })
             });
